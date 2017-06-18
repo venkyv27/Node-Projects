@@ -1,0 +1,17 @@
+{
+  "name": "http-proxy-server",
+  "version": "0.0.1",
+  "description": "http-proxy-server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Venkat",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "http-proxy": "~1.16.2",
+    "socket.io": "~2.0.2",
+    "socket.io-client": "~2.0.2",
+    "wscat": "^2.0.1"
+  }
+}
