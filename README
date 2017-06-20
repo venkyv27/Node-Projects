@@ -1,0 +1,3 @@
+http-proxy-server works fine
+
+ws-proxy does not work fully. There are some issues in socket.io that needs to be fixed for it to work completely.
