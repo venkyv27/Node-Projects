@@ -9,9 +9,9 @@
   "author": "Venkat",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "http-proxy": "~1.16.2",
-    "socket.io": "~2.0.2",
-    "socket.io-client": "~2.0.2",
+    "http-proxy": "^1.16.2",
+    "socket.io": "^2.0.3",
+    "socket.io-client": "^2.0.3",
     "wscat": "^2.0.1"
   }
 }

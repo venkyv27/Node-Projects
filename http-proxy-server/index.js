@@ -1,5 +1,5 @@
-//var util = require('util'),
-  var http = require('http'),
+var util = require('util'),
+    http = require('http'),
     //colors = require('colors'),
     httpProxy = require('http-proxy');
 
@@ -9,7 +9,7 @@ try {
 }
 catch (ex) {
   console.error('Socket.io is required for this example:');
-  //console.error('npm ' + 'install'.green);
+  console.error('npm ' + 'install'.green);
   process.exit(1);
 }
 
@@ -17,7 +17,7 @@ catch (ex) {
 // Create the target HTTP server and setup
 // socket.io on it.
 //
-var server = io.listen(9014);
+var server = io.listen(9015);
 server.sockets.on('connection', function (client) {
   console.log('Got websocket connection');
 
@@ -29,20 +29,32 @@ server.sockets.on('connection', function (client) {
 });
 
 //
-// Create a proxy server with node-http-proxy
+// Setup our server to proxy standard HTTP requests
 //
-httpProxy.createServer({ target: 'ws://localhost:9014', ws: true }).listen(8014);
-//var proxy = httpProxy.createServer({ target: 'wskey: "value", //localhost:9014', ws: true });
-//proxy.listen(8014);
+var proxy = new httpProxy.createProxyServer({
+  target: {
+    host: 'localhost',
+    port: 9015
+  }
+});
+var proxyServer = http.createServer(function (req, res) {
+  proxy.web(req, res);
+});
 
-//proxy.on('open', function(){
-  //console.log('open');
-//});
+//
+// Listen to the `upgrade` event and proxy the
+// WebSocket requests as well.
+//
+proxyServer.on('upgrade', function (req, socket, head) {
+  proxy.ws(req, socket, head);
+});
+
+proxyServer.listen(8015);
 
 //
 // Setup the socket.io client against our proxy
 //
-var ws = client.connect('ws://localhost:8014');
+var ws = client.connect('ws://localhost:8015');
 
 ws.on('message', function (msg) {
   console.log('Got message: ' + msg);
